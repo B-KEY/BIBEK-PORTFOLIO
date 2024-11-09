@@ -1,9 +1,9 @@
+"use client";
 import Link from "next/link";
 import { Button } from "./ui/button";
-
-// components
 import Nav from "./Nav";
 import MobileNav from "./MobileNav";
+import MusicPlayer from "./MusicPlayer";
 
 const Header = () => {
   return (
@@ -17,6 +17,11 @@ const Header = () => {
             </h1>
           </div>
         </Link>
+
+        {/* Music Player - Now visible on all screens */}
+        <div className="flex-1 max-w-[100px] md:max-w-[200px] mx-2 md:mx-4 flex justify-center">
+          <MusicPlayer />
+        </div>
 
         {/* desktop nav & hire me button */}
         <div className="hidden xl:flex items-center gap-8">

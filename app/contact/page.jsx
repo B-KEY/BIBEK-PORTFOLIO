@@ -32,7 +32,7 @@ const info = [
   {
     icon: <FaMapMarkerAlt />,
     title: "Address",
-    description: "Woolwich, London UK",
+    description: "London, UK",
   },
 ];
 
@@ -76,51 +76,36 @@ const Contact = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    
-    // Validate form before submission
-    if (!validateForm(formData)) {
-      return;
-    }
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const errors = validateForm(formData);
 
-    // Get the access key from environment variable
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
-
-    try {
-        const res = await fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                access_key: "2cab3822-c064-4c6d-9b2a-e2a52737b7a1", // Directly use the access key
-                name: formData.get("firstname") + " " + formData.get("lastname"),
-                email: formData.get("email"),
-                phone: formData.get("phone"),
-                message: formData.get("message")
-            })
+    if (Object.keys(errors).length === 0) {
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,  // Using environment variable here
+            name: formData.get("firstname") + " " + formData.get("lastname"),
+            email: formData.get("email"),
+            phone: formData.get("phone"),
+            message: formData.get("message")
+          }),
         });
 
-        const data = await res.json();
-        
-        if (data.success) {
-            // Redirect to thank you page on success
-            router.push('/thankyou');
-        } else {
-            setSubmissionStatus({ 
-                message: `Error: ${data.message || 'Something went wrong'}`, 
-                success: false 
-            });
+        if (response.ok) {
+          router.push('/thankyou');
         }
-    } catch (error) {
-        console.error("Submission error:", error);
-        setSubmissionStatus({ 
-            message: "Error submitting message. Please try again.", 
-            success: false 
-        });
+      } catch (error) {
+        console.error('Error:', error);
+        setFormErrors({ submit: 'Failed to send message' });
+      }
+    } else {
+      setFormErrors(errors);
     }
   };
 
@@ -138,7 +123,7 @@ const Contact = () => {
           {/* form */}
           <div className="xl:w-[54%] order-2 xl:order-none">
           <form onSubmit={onSubmit} className="flex flex-col gap-6 p-10 bg-[#000000] rounded-xl contact-box">
-  <h3 className="text-4xl text-accent">Want to hire me..</h3>
+  <h2 className="text-4xl text-accent">Connect with me...</h2>
               <p className="text-white/60">If you have any questions or want to reach out to me  please fill out the form below.</p>
               {/* input */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
