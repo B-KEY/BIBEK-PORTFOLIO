@@ -3,8 +3,20 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const ThankYou = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push('/contact');
+    }, 4000); // 4 seconds
+
+    return () => clearTimeout(timer);
+  }, [router]);
+
   return (
     <motion.section
       initial={{ opacity: 0 }}

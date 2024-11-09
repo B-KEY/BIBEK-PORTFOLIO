@@ -79,9 +79,9 @@ const Contact = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const errors = validateForm(formData);
+    const isValid = validateForm(formData);
 
-    if (Object.keys(errors).length === 0) {
+    if (isValid) {
       try {
         const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
@@ -89,7 +89,7 @@ const Contact = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,  // Using environment variable here
+            access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
             name: formData.get("firstname") + " " + formData.get("lastname"),
             email: formData.get("email"),
             phone: formData.get("phone"),
@@ -104,8 +104,6 @@ const Contact = () => {
         console.error('Error:', error);
         setFormErrors({ submit: 'Failed to send message' });
       }
-    } else {
-      setFormErrors(errors);
     }
   };
 
