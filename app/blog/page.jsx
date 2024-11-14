@@ -17,17 +17,13 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch(`${DEV_TO_CONFIG.API_URL}/articles?username=${DEV_TO_CONFIG.USERNAME}&_=${Date.now()}`, {
-          headers: {
-            'Cache-Control': 'no-store',
-          },
-        });
+        const res = await fetch(`${DEV_TO_CONFIG.API_URL}/articles?username=${DEV_TO_CONFIG.USERNAME}&_=${Date.now()}`);
         const data = await res.json();
-
+        
         const sortedBlogs = data.sort((a, b) => 
           new Date(b.published_at) - new Date(a.published_at)
         );
-
+        
         setBlogs(sortedBlogs);
         setLoading(false);
       } catch (error) {
@@ -130,7 +126,9 @@ const Blog = () => {
                             <FaBookmark className="inline mr-1" />
                             {blog.public_reactions_count}
                           </span>
-                       <span className="text-purple-500">⌚{blog.reading_time_minutes}min</span>
+                      
+                        <span className="text-purple-500">⌚{blog.reading_time_minutes}min</span>
+                         
                         </div>
                       </div>
                       
