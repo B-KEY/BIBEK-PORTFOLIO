@@ -17,7 +17,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch(`${DEV_TO_CONFIG.API_URL}/articles?username=${DEV_TO_CONFIG.USERNAME}`);
+        const res = await fetch(`${DEV_TO_CONFIG.API_URL}/articles?username=${DEV_TO_CONFIG.USERNAME}&_=${Date.now()}`);
         const data = await res.json();
         
         const sortedBlogs = data.sort((a, b) => 
