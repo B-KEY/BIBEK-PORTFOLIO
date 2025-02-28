@@ -6,7 +6,7 @@ const socials = [
   { icon: <FaGithub />, path: "https://github.com/B-KEY" },
   { icon: <FaLinkedinIn />, path: "https://www.linkedin.com/in/bibek---thapa" },
   { icon: <FaChrome />, path: "https://tryhackme.com/r/p/Ghost..." },
-  { icon: <FaTwitter />, path: "https://x.com/ghostcity01" },
+  { icon: <FaTwitter />, path: "https://x.com/bibek____thapa" },
 ];
 
 const Social = ({ containerStyles, iconStyles }) => {
