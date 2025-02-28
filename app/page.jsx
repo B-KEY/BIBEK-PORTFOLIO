@@ -49,7 +49,7 @@ const Home = () => {
             </div>
             {/* btn and socials */}
             <div className="flex flex-col xl:flex-row items-center gap-8">
-              <a href="https://docs.google.com/document/d/1QC9Uor0G8GCn2PNYbOgtE21mh8VyQaSo/edit?usp=sharing&ouid=117551450666343802958&rtpof=true&sd=true" download>
+              <a href="https://drive.google.com/file/d/1ip3mwXUrYBVOk6364jZ45eYMS557r0Hw/view?usp=sharing" download>
                 <Button
                   variant="outline"
                   size="lg"
