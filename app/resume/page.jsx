@@ -94,7 +94,7 @@ const education = {
     {
       institution: "CompTIA",
       degree: "Security+ certificate",
-      duration: "April 2025",
+      duration: "In-progress - 2025",
     },
     {
       institution: "Rapti Engineering College",
