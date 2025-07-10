@@ -263,6 +263,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
 
 const Resume = () => {
+  // Move hooks to top level
+  const [selectedModule, setSelectedModule] = useState(null);
+  const [hoveredIdx, setHoveredIdx] = useState(null);
+  const [fallingIdx, setFallingIdx] = useState(null);
+  const [fallingDistances, setFallingDistances] = useState({});
+  const bookRefs = useRef([]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -376,81 +383,68 @@ const Resume = () => {
 
             {/* assignment */}
             <TabsContent value="assignment" className="w-full">
-              {(() => {
-                const [selectedModule, setSelectedModule] = useState(null);
-                const [hoveredIdx, setHoveredIdx] = useState(null);
-                const [fallingIdx, setFallingIdx] = useState(null);
-                const [fallingDistances, setFallingDistances] = useState({});
-                const bookRefs = useRef([]);
-                if (!selectedModule) {
-                  // Show module grid
-                  return (
-                    <div className="grid grid-cols-3 gap-x-4 gap-y-8 mb-6 w-full max-w-lg mx-auto">
-                      {assignments.map((mod, idx) => (
-                        <TooltipProvider delayDuration={100} key={mod.module}>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <button
-                                ref={el => (bookRefs.current[idx] = el)}
-                                onClick={async () => {
-                                  // Measure distance from book to bottom of viewport
-                                  const rect = bookRefs.current[idx]?.getBoundingClientRect();
-                                  const distance = rect ? window.innerHeight - rect.top : 180;
-                                  setFallingDistances(d => ({ ...d, [idx]: distance }));
-                                  setFallingIdx(idx);
-                                  await new Promise(res => setTimeout(res, 1500));
-                                  setSelectedModule(mod);
-                                  setFallingIdx(null);
-                                }}
-                                className="flex flex-col items-center justify-center w-28 h-24 bg-[#232329] rounded-lg shadow-md transition-all duration-200 text-white text-sm font-semibold folder-tab relative group"
-                                style={{ marginTop: idx >= 3 ? '1.5rem' : 0 }}
-                                onMouseEnter={() => setHoveredIdx(idx)}
-                                onMouseLeave={() => setHoveredIdx(null)}
-                              >
-                                <Book3D hovered={hoveredIdx === idx} falling={fallingIdx === idx} fallingDistance={fallingDistances[idx] || 180} />
-                                <span className="block mt-2">{mod.module}</span>
-                              </button>
-                            </TooltipTrigger>
-                            <TooltipContent side="top" align="center" className={styles.minimalTooltip}>
-                              <span className="capitalize">{moduleTooltips[idx]}</span>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      ))}
-                    </div>
-                  );
-                } else {
-                  // Show assignments for selected module
-                  return (
-                    <div>
-                      <button
-                        onClick={() => setSelectedModule(null)}
-                        className="mb-6 px-4 py-2 bg-[#232329] text-white rounded shadow hover:bg-[#5a8d3c] hover:text-[#232329] transition-all"
-                      >
-                        ← Back to Modules
-                      </button>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {selectedModule.items.map((a, idx) => (
-                          <div
-                            key={idx}
-                            className="block bg-[#232329] rounded-lg overflow-hidden shadow hover:shadow-lg transition-all duration-300 max-w-xs mx-auto"
+              {selectedModule == null ? (
+                <div className="grid grid-cols-3 gap-x-4 gap-y-8 mb-6 w-full max-w-lg mx-auto">
+                  {assignments.map((mod, idx) => (
+                    <TooltipProvider delayDuration={100} key={mod.module}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button
+                            ref={el => (bookRefs.current[idx] = el)}
+                            onClick={async () => {
+                              // Measure distance from book to bottom of viewport
+                              const rect = bookRefs.current[idx]?.getBoundingClientRect();
+                              const distance = rect ? window.innerHeight - rect.top : 180;
+                              setFallingDistances(d => ({ ...d, [idx]: distance }));
+                              setFallingIdx(idx);
+                              await new Promise(res => setTimeout(res, 1500));
+                              setSelectedModule(mod);
+                              setFallingIdx(null);
+                            }}
+                            className="flex flex-col items-center justify-center w-28 h-24 bg-[#232329] rounded-lg shadow-md transition-all duration-200 text-white text-sm font-semibold folder-tab relative group"
+                            style={{ marginTop: idx >= 3 ? '1.5rem' : 0 }}
+                            onMouseEnter={() => setHoveredIdx(idx)}
+                            onMouseLeave={() => setHoveredIdx(null)}
                           >
-                            <a href={a.pdf} target="_blank" rel="noopener noreferrer">
-                              <img src={a.img} alt={a.title} className="w-full h-32 object-cover" />
-                            </a>
-                            <div className="p-2 text-center">
-                              <a href={a.pdf} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-pink-500 transition-colors inline-flex items-center gap-1 font-semibold">
-                                👉Read More <FaArrowRight className="inline-block text-xs" />
-                              </a>
-                            </div>
-                            <div className="px-2 pb-2 text-xs text-white/70 text-center">{a.description}</div>
-                          </div>
-                        ))}
+                            <Book3D hovered={hoveredIdx === idx} falling={fallingIdx === idx} fallingDistance={fallingDistances[idx] || 180} />
+                            <span className="block mt-2">{mod.module}</span>
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent side="top" align="center" className={styles.minimalTooltip}>
+                          <span className="capitalize">{moduleTooltips[idx]}</span>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  ))}
+                </div>
+              ) : (
+                <div>
+                  <button
+                    onClick={() => setSelectedModule(null)}
+                    className="mb-6 px-4 py-2 bg-[#232329] text-white rounded shadow hover:bg-[#5a8d3c] hover:text-[#232329] transition-all"
+                  >
+                    ← Back to Modules
+                  </button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {selectedModule.items.map((a, idx) => (
+                      <div
+                        key={idx}
+                        className="block bg-[#232329] rounded-lg overflow-hidden shadow hover:shadow-lg transition-all duration-300 max-w-xs mx-auto"
+                      >
+                        <a href={a.pdf} target="_blank" rel="noopener noreferrer">
+                          <img src={a.img} alt={a.title} className="w-full h-32 object-cover" />
+                        </a>
+                        <div className="p-2 text-center">
+                          <a href={a.pdf} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-pink-500 transition-colors inline-flex items-center gap-1 font-semibold">
+                            👉Read More <FaArrowRight className="inline-block text-xs" />
+                          </a>
+                        </div>
+                        <div className="px-2 pb-2 text-xs text-white/70 text-center">{a.description}</div>
                       </div>
-                    </div>
-                  );
-                }
-              })()}
+                    ))}
+                  </div>
+                </div>
+              )}
             </TabsContent>
 
             {/* skills */}
