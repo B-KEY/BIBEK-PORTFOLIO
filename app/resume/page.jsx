@@ -7,10 +7,17 @@ import {
   FaReact,
   FaFigma,
   FaNodeJs,
+  FaArrowRight,
 } from "react-icons/fa";
 
 import Social from "@/components/Social";
+import Image from "next/image";
 import { SiTailwindcss, SiNextdotjs } from "react-icons/si";
+import { useState } from "react";
+import Folder3D from '@/components/Folder3D';
+import Book3D from '@/components/Book3D';
+import React, { useRef } from 'react';
+import styles from '@/components/Book3D.module.css';
 
 // about data
 const about = {
@@ -25,7 +32,7 @@ const about = {
     },
     {
       fieldName: "Phone",
-      fieldValue: "+44 7459939217",
+      fieldValue: "N/A",
     },
     {
       fieldName: "Experience",
@@ -41,7 +48,7 @@ const about = {
     },
     {
       fieldName: "Email",
-      fieldValue: "thapabibekuk55@gmail.com",
+      fieldValue: "N/A",
     },
     {
       fieldName: "Available",
@@ -125,6 +132,124 @@ const skills = {
   ],
 };
 
+// Dummy assignments data for 8 modules
+const assignments = [
+  {
+    module: "Module 1",
+    items: [
+      {
+        title: "Assignment 1",
+        img: "/assets/assignments/module1-assignment1.png",
+        pdf: "https://drive.google.com/file/d/1rTRWer7OnVXfCquEfTQp79fqzPhwcfJG/view?usp=sharing",
+        description: "This is a short description of Assignment 1 in Module fffdfaieufeiofu7 ;khjfoef eifhidhkyhi fhdihf f eiofuyeio fefefeufef ekfjeofue fe1."
+      },
+      
+    ]
+  },
+  {
+    module: "Module 2",
+    items: [
+      {
+        title: "Assignment 1",
+        img: "/assets/assignments/module2-assignment1.png",
+        pdf: "https://drive.google.com/file/d/1wnf7mxgnY6bYxdMoAXkBky5sc862xJn6/view?usp=sharing",
+        description: "This is a short description of Assignment 1 in Module 2."
+      }
+    ]
+  },
+  {
+    module: "Module 3",
+    items: [
+      {
+        title: "Assignment 1",
+        img: "/assets/assignments/module3-assignment1.png",
+        pdf: "https://drive.google.com/file/d/1K_2x_qtRGhnmcYBt35zW6ytlesTLKPgU/view?usp=sharing",
+        description: "This is a short description of Assignment 1 in Module 3."
+      },
+      {
+        title: "Assignment 2",
+        img: "/assets/assignments/module3-assignment2.png",
+        pdf: "https://drive.google.com/file/d/11QTCQDHzNvcaX6yQvNRdWQshAiwigCNW/view?usp=sharing",
+        description: "This is a short description of Assignment 1 in Module 3."
+      },
+    ]
+  },
+  {
+    module: "Module 4",
+    items: [
+      {
+        title: "Assignment 1",
+        img: "/assets/assignments/module4-assignment1.png",
+        pdf: "https://drive.google.com/file/d/1uFburiku_HBDYZgzB37vGmAYW-zoqpGG/view?usp=sharing",
+        description: "This is a short description of Assignment 1 in Module 4."
+      }
+    ]
+  },
+  {
+    module: "Module 5",
+    items: [
+      {
+        title: "Assignment 1",
+        img: "/assets/assignments/module5-assignment1.png",
+        pdf: "https://drive.google.com/file/d/1QAOXfTSLh0U8p26Yh5ts-uGqJsG5_ASK/view?usp=sharing",
+        description: "This is a short description of Assignment 1 in Module 5."
+      }
+    ]
+  },
+  {
+    module: "Module 6",
+    items: [
+      
+      {
+        title: "Assignment 1",
+        img: "/assets/assignments/module6-assignment1.png",
+        pdf: "https://drive.google.com/file/d/1dDCeidTXTdJYKaXxqoJyqjpqZgkqZf7O/view?usp=sharing",
+        description: "This is a short description of Assignment 1 in Module 6."
+      },
+      {
+        title: "Assignment 2",
+        img: "/assets/assignments/module6-assignment2.png",
+        pdf: "https://drive.google.com/file/d/1zI7jGGQ105YCMMRgOaPJ1vn6QTXwn2Au/view?usp=sharing",
+        description: "This is a short description of Assignment 1 in Module 6."
+      }
+    ]
+  },
+  {
+    module: "Module 7",
+    items: [
+      {
+        title: "Assignment 1",
+        img: "/assets/assignments/module7-assignment1.png",
+        pdf: "https://drive.google.com/dummy-link-8",
+        description: "coming soon."
+      }
+    ]
+  },
+  {
+    module: "Module 8",
+    items: [
+      {
+        title: "Assignment 1",
+        img: "/assets/assignments/module8-assignment1.png",
+        pdf: "https://drive.google.com/dummy-link-9",
+        description: "coming soon."
+      }
+    ]
+  }
+];
+
+// Tooltip labels for each module
+const moduleTooltips = [
+  'Information Governance and Security',
+  'Network Security',
+  'Wireless Networks and Security',
+  'Information Assurance and Risk Management',
+  'Ethical Hacking for Cyber Security',
+  'Research Methods and Project Management',
+  'Advanced Practice',
+  'MSc Computer Science and Digital Technologies Project'
+];
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import {
@@ -153,10 +278,36 @@ const Resume = () => {
           className="flex flex-col xl:flex-row gap-[60px]"
         >
           <TabsList className="flex flex-col w-full max-w-[380px] mx-auto xl:mx-0 gap-6">
-            <TabsTrigger value="experience">Experience</TabsTrigger>
-            <TabsTrigger value="education">Education</TabsTrigger>
-            <TabsTrigger value="skills">Skills</TabsTrigger>
-            <TabsTrigger value="about">About me</TabsTrigger>
+            <TabsTrigger value="experience">
+              <span className="inline-flex items-center gap-3">
+                <img src="/assets/resume/experience.svg" alt="Experience" width={22} height={22} />
+                Experience
+              </span>
+            </TabsTrigger>
+            <TabsTrigger value="education">
+              <span className="inline-flex items-center gap-3">
+                <img src="/assets/resume/cap.svg" alt="Education" width={22} height={22} />
+                Education
+              </span>
+            </TabsTrigger>
+            <TabsTrigger value="assignment">
+              <span className="inline-flex items-center gap-3">
+                <img src="/assets/resume/assignment.svg" alt="Assignments" width={22} height={22} />
+                Assignments
+              </span>
+            </TabsTrigger>
+            <TabsTrigger value="skills">
+              <span className="inline-flex items-center gap-3">
+                <img src="/assets/resume/skills.svg" alt="Skills" width={22} height={22} />
+                Skills
+              </span>
+            </TabsTrigger>
+            <TabsTrigger value="about">
+              <span className="inline-flex items-center gap-3">
+                <img src="/assets/resume/about.svg" alt="About Me" width={22} height={22} />
+                About me
+              </span>
+            </TabsTrigger>
           </TabsList>
 
           {/* content */}
@@ -223,6 +374,85 @@ const Resume = () => {
               </div>
             </TabsContent>
 
+            {/* assignment */}
+            <TabsContent value="assignment" className="w-full">
+              {(() => {
+                const [selectedModule, setSelectedModule] = useState(null);
+                const [hoveredIdx, setHoveredIdx] = useState(null);
+                const [fallingIdx, setFallingIdx] = useState(null);
+                const [fallingDistances, setFallingDistances] = useState({});
+                const bookRefs = useRef([]);
+                if (!selectedModule) {
+                  // Show module grid
+                  return (
+                    <div className="grid grid-cols-3 gap-x-4 gap-y-8 mb-6 w-full max-w-lg mx-auto">
+                      {assignments.map((mod, idx) => (
+                        <TooltipProvider delayDuration={100} key={mod.module}>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <button
+                                ref={el => (bookRefs.current[idx] = el)}
+                                onClick={async () => {
+                                  // Measure distance from book to bottom of viewport
+                                  const rect = bookRefs.current[idx]?.getBoundingClientRect();
+                                  const distance = rect ? window.innerHeight - rect.top : 180;
+                                  setFallingDistances(d => ({ ...d, [idx]: distance }));
+                                  setFallingIdx(idx);
+                                  await new Promise(res => setTimeout(res, 1500));
+                                  setSelectedModule(mod);
+                                  setFallingIdx(null);
+                                }}
+                                className="flex flex-col items-center justify-center w-28 h-24 bg-[#232329] rounded-lg shadow-md transition-all duration-200 text-white text-sm font-semibold folder-tab relative group"
+                                style={{ marginTop: idx >= 3 ? '1.5rem' : 0 }}
+                                onMouseEnter={() => setHoveredIdx(idx)}
+                                onMouseLeave={() => setHoveredIdx(null)}
+                              >
+                                <Book3D hovered={hoveredIdx === idx} falling={fallingIdx === idx} fallingDistance={fallingDistances[idx] || 180} />
+                                <span className="block mt-2">{mod.module}</span>
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" align="center" className={styles.minimalTooltip}>
+                              <span className="capitalize">{moduleTooltips[idx]}</span>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      ))}
+                    </div>
+                  );
+                } else {
+                  // Show assignments for selected module
+                  return (
+                    <div>
+                      <button
+                        onClick={() => setSelectedModule(null)}
+                        className="mb-6 px-4 py-2 bg-[#232329] text-white rounded shadow hover:bg-[#5a8d3c] hover:text-[#232329] transition-all"
+                      >
+                        ← Back to Modules
+                      </button>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {selectedModule.items.map((a, idx) => (
+                          <div
+                            key={idx}
+                            className="block bg-[#232329] rounded-lg overflow-hidden shadow hover:shadow-lg transition-all duration-300 max-w-xs mx-auto"
+                          >
+                            <a href={a.pdf} target="_blank" rel="noopener noreferrer">
+                              <img src={a.img} alt={a.title} className="w-full h-32 object-cover" />
+                            </a>
+                            <div className="p-2 text-center">
+                              <a href={a.pdf} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-pink-500 transition-colors inline-flex items-center gap-1 font-semibold">
+                                👉Read More <FaArrowRight className="inline-block text-xs" />
+                              </a>
+                            </div>
+                            <div className="px-2 pb-2 text-xs text-white/70 text-center">{a.description}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+              })()}
+            </TabsContent>
+
             {/* skills */}
             <TabsContent value="skills" className="w-full h-full">
               <div className="flex flex-col gap-[30px]">
@@ -267,13 +497,22 @@ const Resume = () => {
                 </p>
                 <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[620px] mx-auto xl:mx-0">
                   {about.info.map((item, index) => {
+                    const isLinkedIn = item.fieldName === "LinkedIn";
                     return (
                       <li
                         key={index}
                         className="flex items-center justify-center xl:justify-start gap-4"
                       >
                         <span className="text-white/60">{item.fieldName}</span>
-                        <span className="text-xl">{item.fieldValue}</span>
+                        <span className="text-xl">
+                          {isLinkedIn ? (
+                            <a href={`https://www.linkedin.com/in${item.fieldValue}`} target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:text-accent transition-colors">
+                              {item.fieldValue}
+                            </a>
+                          ) : (
+                            item.fieldValue
+                          )}
+                        </span>
                       </li>
                     );
                   })}

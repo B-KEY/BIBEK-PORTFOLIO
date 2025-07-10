@@ -1,0 +1,85 @@
+.folder3d {
+  --folder-color: #ffc800;
+  --folder-back-color: #eab800;
+  --paper-1: #e01a1a;
+  --paper-2: #1310e5;
+  --paper-3: #fff;
+  --folder-scale: 1;
+  --folder-speed: 0.3s;
+  --flap-angle: 0deg;
+  --magnet-x: 0px;
+  --magnet-y: 0px;
+  width: 90px;
+  height: 60px;
+  position: relative;
+  transform: scale(var(--folder-scale));
+  transition: transform var(--folder-speed);
+  perspective: 800px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.folderBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--folder-back-color);
+  border-radius: 8px 8px 4px 4px;
+  z-index: 1;
+  box-shadow: 0 4px 16px #0002;
+}
+
+.folderPaper {
+  position: absolute;
+  left: 12px;
+  width: 66px;
+  height: 16px;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px #0002;
+  border: 1px solid #e2e2e2;
+  transition: transform var(--folder-speed), box-shadow var(--folder-speed);
+  z-index: 2;
+}
+.red {
+  top: 30px;
+  background: var(--paper-1);
+  z-index: 2;
+}
+.blue {
+  top: 22px;
+  background: var(--paper-2);
+  z-index: 3;
+}
+.white {
+  top: 14px;
+  background: var(--paper-3);
+  z-index: 4;
+}
+
+.folderFlap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 24px;
+  background: var(--folder-color);
+  border-radius: 8px 8px 0 0;
+  z-index: 20;
+  transform-origin: top center;
+  transform: rotateX(var(--flap-angle));
+  transition: transform var(--folder-speed);
+  box-shadow: 0 6px 16px #0003;
+  display: flex;
+  align-items: flex-end;
+}
+
+.tab {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 28px;
+  height: 100%;
+  background: var(--folder-back-color);
+  border-radius: 0 8px 0 0;
+} 
