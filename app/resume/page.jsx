@@ -141,7 +141,7 @@ const assignments = [
         title: "Assignment 1",
         img: "/assets/assignments/module1-assignment1.png",
         pdf: "https://drive.google.com/file/d/1rTRWer7OnVXfCquEfTQp79fqzPhwcfJG/view?usp=sharing",
-        description: "This is a short description of Assignment 1 in Module fffdfaieufeiofu7 ;khjfoef eifhidhkyhi fhdihf f eiofuyeio fefefeufef ekfjeofue fe1."
+        description: ""
       },
       
     ]
@@ -153,7 +153,7 @@ const assignments = [
         title: "Assignment 1",
         img: "/assets/assignments/module2-assignment1.png",
         pdf: "https://drive.google.com/file/d/1wnf7mxgnY6bYxdMoAXkBky5sc862xJn6/view?usp=sharing",
-        description: "This is a short description of Assignment 1 in Module 2."
+        description: ""
       }
     ]
   },
@@ -164,13 +164,13 @@ const assignments = [
         title: "Assignment 1",
         img: "/assets/assignments/module3-assignment1.png",
         pdf: "https://drive.google.com/file/d/1K_2x_qtRGhnmcYBt35zW6ytlesTLKPgU/view?usp=sharing",
-        description: "This is a short description of Assignment 1 in Module 3."
+        description: ""
       },
       {
         title: "Assignment 2",
         img: "/assets/assignments/module3-assignment2.png",
         pdf: "https://drive.google.com/file/d/11QTCQDHzNvcaX6yQvNRdWQshAiwigCNW/view?usp=sharing",
-        description: "This is a short description of Assignment 1 in Module 3."
+        description: ""
       },
     ]
   },
@@ -181,7 +181,7 @@ const assignments = [
         title: "Assignment 1",
         img: "/assets/assignments/module4-assignment1.png",
         pdf: "https://drive.google.com/file/d/1uFburiku_HBDYZgzB37vGmAYW-zoqpGG/view?usp=sharing",
-        description: "This is a short description of Assignment 1 in Module 4."
+        description: ""
       }
     ]
   },
@@ -192,7 +192,7 @@ const assignments = [
         title: "Assignment 1",
         img: "/assets/assignments/module5-assignment1.png",
         pdf: "https://drive.google.com/file/d/1QAOXfTSLh0U8p26Yh5ts-uGqJsG5_ASK/view?usp=sharing",
-        description: "This is a short description of Assignment 1 in Module 5."
+        description: ""
       }
     ]
   },
@@ -204,13 +204,13 @@ const assignments = [
         title: "Assignment 1",
         img: "/assets/assignments/module6-assignment1.png",
         pdf: "https://drive.google.com/file/d/1dDCeidTXTdJYKaXxqoJyqjpqZgkqZf7O/view?usp=sharing",
-        description: "This is a short description of Assignment 1 in Module 6."
+        description: ""
       },
       {
         title: "Assignment 2",
         img: "/assets/assignments/module6-assignment2.png",
         pdf: "https://drive.google.com/file/d/1zI7jGGQ105YCMMRgOaPJ1vn6QTXwn2Au/view?usp=sharing",
-        description: "This is a short description of Assignment 1 in Module 6."
+        description: ""
       }
     ]
   },
@@ -221,7 +221,7 @@ const assignments = [
         title: "Assignment 1",
         img: "/assets/assignments/module7-assignment1.png",
         pdf: "https://drive.google.com/dummy-link-8",
-        description: "coming soon."
+        description: ""
       }
     ]
   },
@@ -232,7 +232,7 @@ const assignments = [
         title: "Assignment 1",
         img: "/assets/assignments/module8-assignment1.png",
         pdf: "https://drive.google.com/dummy-link-9",
-        description: "coming soon."
+        description: ""
       }
     ]
   }
